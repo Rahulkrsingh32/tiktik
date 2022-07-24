@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
+
 import axios from 'axios';
 import { SanityAssetDocument } from '@sanity/client';
 import useAuthStore from '../store/authStore';
