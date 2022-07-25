@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-
+import { AiOutlineVideoCamera } from 'react-icons/ai';
 import axios from 'axios';
 import { SanityAssetDocument } from '@sanity/client';
 import useAuthStore from '../store/authStore';
@@ -21,6 +21,9 @@ const upload = () => {
 
     const uploadVideo = async (e: any) => {
         const selectedFile = e.target.files[0];
+        if(selectedFile){
+            setSavingPost(true);
+        }
         const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
         if(fileTypes.includes(selectedFile.type)){
             client.assets.upload('file', selectedFile, {
@@ -38,6 +41,7 @@ const upload = () => {
     }
 
     const handlePost = async () => {
+        
         if(caption && videoAsset?._id && category){
             setSavingPost(true);
             const document = {
@@ -97,14 +101,22 @@ const upload = () => {
                                             </p>
                                         </div>
                                         <p className='text-gray-400 text-center mt-10 text-sm leading-10' >
+                                            {savingPost && (
+                                                <p className='text-xl' > Loading File ... </p>
+                                            )}
                                             MP4 or WebM or ogg <br />
                                             720x1280 or higher <br />
                                             Up to 10 minutes <br />
                                             Less that 2GB
                                         </p>
+                                        {!savingPost ? (
+
                                         <p className='bg-[#F51997] text-center mt-10 rounded text-white text-md font-medium p-2 w-52 outline-none' >
-                                            Select File
+                                            Select File 
                                         </p>
+                                        ) : (
+                                            <p> Loading File ...</p>
+                                        )}
                                     </div>
                                     <input 
                                         type="file"
